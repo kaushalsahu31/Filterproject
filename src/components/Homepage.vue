@@ -58,7 +58,7 @@ export default {
     getData() {
       axios
         .get(
-          "https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=1&count=10&sort_by=&sort_dir=desc&filter="
+          "https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=1&count=100&sort_by=&sort_dir=desc&filter="
         )
         .then((res) => {
           this.filters = res.data.result.filters;
@@ -75,7 +75,7 @@ export default {
         c=c.substring(0, c.length - 1);
       axios
         .get(
-          "https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=1&count=10&sort_by=&sort_dir=desc&filter="+c
+          "https://pim.wforwoman.com/pim/pimresponse.php/?service=category&store=1&url_key=top-wear-kurtas&page=1&count=100&sort_by=&sort_dir=desc&filter="+c
         )
         .then((res) => {
           this.products = res.data.result.products;
