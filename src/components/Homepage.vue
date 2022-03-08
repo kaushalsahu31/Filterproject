@@ -2,15 +2,21 @@
   <div class="container">
     <div class="filter">
       <div class="filterList">
-        <button class="accordion2">Filter</button>
-      </div>
+        <button class="accordion2">Filter
+
+            <div v-for="(val, index) in choose" :key="{ index }">
+            <button class="del" v-on:click="oncheck(val)">x {{val.value}}</button>        </div>
+      
+        </button>
+      </div>  
+
       <div v-for="(val, index) in filters" :key="{ index }" class="filterList">
         <button v-on:click="accordion(index)" class="accordion">
           {{ val.filter_lable }}
         </button>
         <div class="panel">
           <span v-for="val2 in val.options" :key="{ val2 }">
-              <input type="checkbox" name="check" v-on:click="oncheck(val2.code,val2.value)" :value=val2.value>
+              <input type="checkbox" name="check" v-on:click="oncheck(val2)" :value=val2.value>
             <label> {{ val2.value }}</label><br>
             </span>
         </div>
@@ -70,7 +76,7 @@ export default {
         let f= this.choose
         let c =""
         for (let i = 0; i < f.length; i++) {
-             c=c+ f[i]+",";       
+             c=c+ f[i].code+"-"+f[i].value+",";       
         }
         c=c.substring(0, c.length - 1);
       axios
@@ -91,14 +97,14 @@ export default {
         panel.style.display = "block";
       }
     },
-    oncheck(code,filter){
-        let checks=code+"-"+filter
-        if (this.choose.includes(checks)){
-            let index=this.choose.indexOf(checks)
+    oncheck(val){
+        // let checks=code+"-"+filter
+        if (this.choose.includes(val)){
+            let index=this.choose.indexOf(val)
             this.choose.splice(index, 1);
 
         }else{
-            this.choose.push(checks)
+            this.choose.push(val)
         }
         console.log(this.choose);
         this.checkfilter()
@@ -175,6 +181,8 @@ export default {
   text-transform: uppercase;
   color: #000;
   margin: 0;
+  display: flex;
+  gap: 5px;
 }
 .accordion:after {
   content: "\25BC"; /* Unicode character for "plus" sign (+) */
@@ -186,5 +194,13 @@ export default {
 
 .active:after {
   content: "\25B2"; /* Unicode character for "minus" sign (-) */
+}
+.del{
+    background-color: red;
+    padding: 5px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: white;
 }
 </style>
